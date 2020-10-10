@@ -1,0 +1,44 @@
+name: juce-ci-starter
+
+on: [push]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: "Preparation"
+      uses: actions/checkout@v2
+
+    - name: "(JUCE) Clone Repository"
+      uses: actions/checkout@v2
+      with:
+        repository: juce-framework/JUCE
+        path: ${{runner.workspace}}/juce-ci-starter/JUCE
+
+    - name: "(JUCE) Create Build Environment"
+      working-directory: ${{runner.workspace}}/juce-ci-starter/JUCE
+      run: cmake -E make_directory ${{runner.workspace}}/juce-ci-starter/JUCE/build
+
+    - name: "(JUCE) Configuration"
+      working-directory: ${{runner.workspace}}/juce-ci-starter/JUCE/build
+      run: cmake ${{runner.workspace}}/juce-ci-starter/JUCE
+
+    - name: "(JUCE) Build"
+      working-directory: ${{runner.workspace}}/juce-ci-starter/JUCE/build
+      run: cmake --build .
+
+    - name: "(JuceCIStarter) Create Build Environment"
+      working-directory: ${{runner.workspace}}/juce-ci-starter
+      run: cmake -E make_directory ${{runner.workspace}}/juce-ci-starter/build
+
+    - name: "(JuceCIStarter) Configuration"
+      working-directory: ${{runner.workspace}}/juce-ci-starter/build
+      run: cmake ${{runner.workspace}}/juce-ci-starter/build
+
+    - name: "(JuceCIStarter) Build"
+      working-directory: ${{runner.workspace}}/juce-ci-starter/build
+      run: cmake --build . --config ${{BUILD_TYPE}}
