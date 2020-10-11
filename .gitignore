@@ -1,9 +1,9 @@
 # JUCE repository and library code
-JUCE/ 
-JuceCIStarter/JuceLibraryCode/
+JUCE
+JuceCIStarter/JuceLibraryCode
 
 # CMake build output
-build/
+build
 
 # Visual Studio Code 
-**/.vscode/
+**/.vscode
