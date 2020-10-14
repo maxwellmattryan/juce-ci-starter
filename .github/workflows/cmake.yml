@@ -1,4 +1,4 @@
-name: juce-ci-starter-win
+name: juce-ci
 
 on: [push]
 
